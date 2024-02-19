@@ -1,0 +1,23 @@
+package week03.day12.상속연습;
+
+public class 집청소 {
+
+	
+	public void 청소기돌리기() {
+		System.out.println("청소기 돌린다");
+	}
+	
+	public void 걸레질하기() {
+		System.out.println("걸레질 한다");
+	}
+}
+
+
+
+/*
+대중교통	-타다
+
+지하철     		택시
+-교통카드 찍기		-택시부르기
+-타다=>걸어서 타다	-불러서 타다
+*/

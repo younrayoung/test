@@ -1,0 +1,184 @@
+package week04.day1.프로젝트_5;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+import week03.day14.프로젝트_4.Login;
+
+public class EmpMain {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+			ArrayList<Employ> list = new ArrayList<>();
+				
+			파일읽어오기(list);
+			
+			System.out.println("[ 직원관리 프로그램 로그인 정보를 입력하세요. ]");
+			 
+			// Login 클래스 인스턴스 생성
+	        AdminLogin login = new AdminLogin();
+
+	        // 아이디와 비밀번호 입력
+	        System.out.print("아이디: ");
+	        String id = sc.nextLine();
+	        System.out.print("비밀번호: ");
+	        String pw = sc.nextLine();
+ 
+	        // 입력된 아이디와 비밀번호가 맞을때   관리자확인
+	        if (!login.check(id, pw))  {
+	        	 System.out.println(" 관리자가 아닙니다. 아이디 ");
+	        	return;
+	        }
+	      
+	       System.out.println(" 			로그인 성공!");
+	       System.out.println(" 		직원관리 프로그램을 시작합니다. ");
+	            
+			loop:while(true) {
+			System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+			System.out.println(" 메뉴를 선택하세요  |  1.직원등록   2.직원전체조회   3.직원정보변경   4.직원정보삭제   5.종료");
+			System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+			int menu = sc.nextInt();
+			int index=0;
+			switch(menu) {
+				case 1 :
+					System.out.println(" [ 등록할 직원의 정보를 입력하세요. ] ex) 홍길동, 010-9876-5432, 9961, 기획부, 부장");
+					System.out.println("");
+					String name = sc.next();
+					String tel = sc.next();
+					String number = sc.next();
+					String division = sc.next();
+					String position = sc.next();
+					Employ s = new Employ(name,tel,number,division,position);
+					list.add(s);
+					System.out.println();
+					System.out.println(" 		직원 등록이 완료되었습니다.");
+					System.out.println();
+					break;
+//----------------------------------------------------------------------------------------------	
+				case 2:
+					System.out.println(" [ 전체 직원 리스트 ]");
+					//System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+					System.out.println("번호ㅡㅡㅡ사원이름ㅡㅡㅡㅡㅡ연락처ㅡㅡㅡㅡㅡㅡ사내번호ㅡㅡㅡ부서ㅡㅡㅡ직급");
+					//System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+					Collections.sort(list); // ㄱㄴㄷ순으로 정렬
+					for(int i=0;i<list.size();i++) {
+						System.out.println((i + 1)+"  " +list.get(i).toString());
+					}
+					break;
+//----------------------------------------------------------------------------------------------
+				case 3:
+					System.out.println("	[ 전체 직원 리스트 ]");
+					System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+					System.out.println("번호  사원이름       연락처        사내번호    부서     직급");
+					System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+					for(int i = 0; i < list.size(); i++) { // 직원리스트 출력
+				        System.out.println((i + 1) + ". " + list.get(i));
+				    }
+					
+				    System.out.print("변경할 직원의 번호를 선택하세요.  = ");
+				    int empIndex = sc.nextInt(); // 직원인덱스 번호 입력
+				    if (empIndex >= 1) {
+				    	if (empIndex <= list.size()) {
+				    		
+				    	}
+							System.out.print("[ 수정할 정보를 선택하세요 ] 1.연락처   2.내선번호   3.부서   4.직급  = ");
+							//System.out.println("");
+							int menu2 = sc.nextInt();
+							Employ empChange = list.get(empIndex - 1);
+							
+							switch(menu2) {
+							case 1:
+								System.out.print("수정할 연락처를 입력하세요.  = ");
+								String phone = sc.next();
+								empChange.setTel(phone);
+								
+								break;
+							case 2:
+								System.out.print("수정할 내선번호를 입력하세요.  = ");	
+								String n = sc.next();
+								empChange.setNumber(n);
+								
+								break;
+							case 3:
+								System.out.print("수정할 부서를 입력하세요.  = ");
+								String d = sc.next();
+								empChange.setDivision(d);
+								
+								break;
+							case 4:
+								System.out.print("수정할 직급을 입력하세요.  = ");
+								String p = sc.next();
+								empChange.setPosition(p);
+								break;
+							default:	
+								System.out.println("1~4번 중에서 입력하세요.");
+							}
+							System.out.println("---- 정보변경이 완료되었습니다. ----");
+							System.out.println();
+							
+				    	}else {
+							System.out.println("---- 해당 직원은 리스트에 없습니다. ----");
+						}
+					break;
+//----------------------------------------------------------------------------------------------
+				case 4:
+					System.out.println("직원 정보 삭제.");
+					System.out.println("* 전체 직원 리스트 *");
+					for(int i=0;i<list.size();i++) {
+						System.out.println((i + 1)+"  " +list.get(i).toString());
+					}
+					System.out.println("삭제할 직원의 번호를 입력하시오.");
+					int worker = sc.nextInt();
+					list.remove(worker-1);
+				System.out.println("---- 삭제되었습니다. ----");
+					break;
+//----------------------------------------------------------------------------------------------
+				case 5:
+					System.out.println("---- 프로그램 종료 ----");
+					break loop;
+				default:
+					System.out.println("잘못된 메뉴입니다.");
+				}
+		
+			}
+	     
+	}
+
+	public static void 파일읽어오기(ArrayList<Employ> list) {
+		try {
+			//ArrayList<Employ> list = new ArrayList<>();
+			BufferedReader reader = new BufferedReader(new FileReader("res/employee_info.txt"));
+			
+			//성적읽어오기
+			String line;
+		    while(true) {
+		    	line = reader.readLine()   ; // 한 라인을 읽어오기  홍길동,010-7788-1512,1111,기획부,부장	        	
+		    	if( line == null) break; // 라인이 null 될 때 break
+		        // 콤마로 구분된 문자열을 분리하여 이름과 점수를 얻음
+				String[] datas = line.split(",");
+				
+				String name =  datas[0];
+				String tel =  datas[1];
+				String number =  datas[2];
+				String division = datas[3];
+				String position =  datas[4];			
+				
+				Employ s1 = new Employ(name,tel,number,division,position);		
+				
+				//System.out.println( s1);
+				list.add(s1);
+		    }
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
